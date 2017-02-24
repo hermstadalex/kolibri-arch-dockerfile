@@ -1,7 +1,19 @@
 FROM base/archlinux:2015.06.01
-ADD setup_env_local.sh /
-RUN source /setup_env_local.sh
 
+RUN echo "y" | pacman -Sy archlinux-keyring && pacman -Syy
+RUN pacman-db-upgrade
+RUN echo "y" | pacman -S git
+RUN echo "y" | pacman -S python
+RUN echo "y" | pacman -S python-pip
+RUN echo "y" | pacman -S pkgfile
+RUN echo "y" | pacman -S fakeroot
+RUN pkgfile --update
+
+RUN echo "y" | pacman -Sy archlinux-keyring && pacman -Syy
+RUN printf "1-25\nY" | pacman -S base-devel
+RUN echo "y" | pacman -S namcap
+
+RUN useradd -m -G wheel -s /bin/bash kol
 
 USER kol
 
@@ -10,7 +22,6 @@ RUN git clone https://github.com/anntzer/pypi2pkgbuild.git
 WORKDIR /home/kol/pypi2pkgbuild/
 
 RUN mkdir out
-ADD ./pypi2pkgbuild.sh .
 ADD in .
 
-ADD sudoers.tmp /etc/sudoers.tmp
+CMD python ./pypi2pkgbuild.py -d --pre --no-install file://$(readlink -f *.whl) && cp -r /home/kol/pypi2pkgbuild/*kolibri*/*.xz /home/kol/pypi2pkgbuild/out/
