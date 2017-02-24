@@ -20,6 +20,7 @@ USER kol
 WORKDIR /home/kol/
 RUN git clone https://github.com/anntzer/pypi2pkgbuild.git
 WORKDIR /home/kol/pypi2pkgbuild/
+RUN git reset --hard 3089def2bdb7444ffb6bb86803fe7634a5de3515
 
 RUN mkdir out
 ADD in .
