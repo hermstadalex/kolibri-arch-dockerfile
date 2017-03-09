@@ -1,1 +1,1 @@
-Building and Running: https://puu.sh/uBRWq/c3846135ab.png
+Building and Running: `docker build -t buildarchpackage . && docker run -i -t -v $PWD/in:/in -v $PWD/out:/out buildarchpackage`
