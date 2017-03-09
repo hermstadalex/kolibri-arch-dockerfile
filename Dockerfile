@@ -6,4 +6,4 @@ RUN /build_env.sh
 VOLUME /in
 VOLUME /out
 COPY ./build_pkg.sh /build_pkg.sh
-CMD /build_pkg.sh && /bin/bash
+CMD /build_pkg.sh 
